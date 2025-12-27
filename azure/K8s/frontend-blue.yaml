@@ -14,8 +14,21 @@ spec:
         app: frontend
         color: blue
     spec:
-      imagePullSecrets:
-      - name: dockerhub-secret
       containers:
       - name: frontend-blue
-        image: urchytech/blue-frontend:latest
+        image: k8spractice.azurecr.io/blue_frontend:latest
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-blue
+spec:
+  selector:
+    app: frontend
+    color: blue   # switch to green when ready
+  ports:
+    - port: 80
+      targetPort: 80
+
+  

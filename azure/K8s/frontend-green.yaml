@@ -14,8 +14,19 @@ spec:
         app: frontend
         color: green
     spec:
-      imagePullSecrets:
-      - name: dockerhub-secret
       containers:
       - name: frontend-green
-        image: urchytech/green-frontend:latest
+        image: k8spractice.azurecr.io/green_frontend:latest
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-green
+spec:
+  selector:
+    app: frontend
+    color: green
+  ports:
+    - port: 80
+      targetPort: 80

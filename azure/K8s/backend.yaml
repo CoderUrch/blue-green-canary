@@ -13,16 +13,27 @@ spec:
       labels:
         app: backend
     spec:
-      serviceAccountName: backend-sa
-      imagePullSecrets:
-        - name: dockerhub-secret
       containers:
         - name: backend
-          image: urchytech/blue-backend:latest
+          image: k8spractice.azurecr.io/blue_backend:latest
           ports:
             - containerPort: 3000
-          env:
-            - name: AWS_REGION
-              value: eu-north-1
-            - name: SECRET_ID
-              value: db-secret
+          envFrom:
+            - secretRef:
+                name: postgres-secret
+           
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend  # ✅ Frontend will connect to this
+  namespace: blue
+spec:
+  selector:
+    app: backend  # Must match deployment label
+  ports:
+    - port: 3000
+      targetPort: 3000
+  type: ClusterIP

@@ -21,3 +21,17 @@ spec:
             name: postgres-secret
         ports:
         - containerPort: 5432
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: blue
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
