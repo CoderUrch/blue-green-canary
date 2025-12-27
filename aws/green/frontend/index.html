@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: green;
+      color: white;
+      font-size: 32px;
+      text-align: center;
+      margin-top: 20%;
+    }
+  </style>
+</head>
+<body>
+  <div>Frontend (GREEN)</div>
+  <div id="api"></div>
+
+  <script>
+    fetch("/api")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("api").innerText =
+          "Backend says: " + data.message;
+      })
+      .catch(err => {
+        document.getElementById("api").innerText =
+          "Backend not reachable";
+      });
+  </script>
+</body>
+</html>

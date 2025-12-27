@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      serviceAccountName: backend-sa
+      imagePullSecrets:
+        - name: dockerhub-secret
+      containers:
+        - name: backend
+          image: urchytech/blue-backend:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: AWS_REGION
+              value: eu-north-1
+            - name: SECRET_ID
+              value: db-secret

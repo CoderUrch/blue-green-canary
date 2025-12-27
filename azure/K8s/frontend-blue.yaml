@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: frontend
+        color: blue
+    spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
+      containers:
+      - name: frontend-blue
+        image: urchytech/blue-frontend:latest

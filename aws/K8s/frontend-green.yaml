@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-green
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+      color: green
+  template:
+    metadata:
+      labels:
+        app: frontend
+        color: green
+    spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
+      containers:
+      - name: frontend-green
+        image: urchytech/green-frontend:latest

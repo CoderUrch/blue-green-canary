@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::798555099259:oidc-provider/oidc.eks.eu-north-1.amazonaws.com/id/B591ACD6F6432B39332A3C6A4280076C"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.eu-north-1.amazonaws.com/id/B591ACD6F6432B39332A3C6A4280076C:sub": "system:serviceaccount:blue:backend-sa",
+          "oidc.eks.eu-north-1.amazonaws.com/id/B591ACD6F6432B39332A3C6A4280076C:aud": "sts.amazonaws.com"
+        }
+      }
+    }
+  ]
+}
