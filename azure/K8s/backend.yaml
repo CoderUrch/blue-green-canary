@@ -12,16 +12,26 @@ spec:
     metadata:
       labels:
         app: backend
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: backend-sa
       containers:
         - name: backend
           image: k8spractice.azurecr.io/blue_backend:latest
           ports:
             - containerPort: 3000
-          envFrom:
-            - secretRef:
-                name: postgres-secret
-           
+          volumeMounts:
+            - name: secrets-store
+              mountPath: /mnt/secrets
+              readOnly: true
+      volumes:
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: postgres-keyvault
+                       
 
 ---
 

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-sa
+  namespace: blue
+  annotations:
+    azure.workload.identity/client-id: eda4936d-dcfe-43e2-848d-41ccb54166de
