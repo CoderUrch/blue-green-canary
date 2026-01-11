@@ -4,7 +4,7 @@ metadata:
   name: postgres
   namespace: blue
 spec:
-  replicas: 1
+  replicas: 2
   serviceName: postgres
   selector:
     matchLabels:
