@@ -1,0 +1,27 @@
+grafana:
+  enabled: true
+
+  grafana.ini:
+    server:
+      root_url: https://grafana.mylearncloud.shop/
+
+    auth.generic_oauth:
+      enabled: true
+      name: Keycloak
+      allow_sign_up: true
+
+      client_id: grafana
+      client_secret: iwRksFEuoFkIcZ00yyD4DuzZ0tIODsHD
+
+      scopes: openid profile groups email
+
+      auth_url:  https://keycloak.mylearncloud.shop/realms/mytest/protocol/openid-connect/auth
+      token_url: https://keycloak.mylearncloud.shop/realms/mytest/protocol/openid-connect/token
+      api_url:   https://keycloak.mylearncloud.shop/realms/mytest/protocol/openid-connect/userinfo
+
+      login_attribute_path: preferred_username
+      name_attribute_path: name
+      email_attribute_path: email
+
+      # Give yourself full admin rights
+      role_attribute_path: contains(groups[*], 'cluster-admins') && 'Admin' || contains(groups[*], 'cluster-viewer') && 'Viewer' || 'Editor'

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+  namespace: blue
+spec:
+  type: ExternalName
+  externalName: keycloak.keycloak.svc.cluster.local
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: blue
+spec:
+  type: ExternalName
+  externalName: loki-stack-grafana.monitoring.svc.cluster.local
+  ports:
+    - port: 80
+      targetPort: 80
