@@ -1,0 +1,15 @@
+project: default
+source:
+  repoURL: https://github.com/CoderUrch/blue-green-canary.git
+  path: azure/K8s
+  targetRevision: HEAD
+destination:
+  server: https://kubernetes.default.svc
+  namespace: blue
+syncPolicy:
+  automated:
+    prune: true
+    selfHeal: true
+    enabled: true
+  syncOptions:
+    - CreateNamespace=true

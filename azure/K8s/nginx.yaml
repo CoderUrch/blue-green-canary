@@ -49,6 +49,7 @@ spec:
                 name: grafana  # fully qualified service name
                 port:
                   number: 80
+
   tls:
     - hosts:
         - www.mylearncloud.shop
