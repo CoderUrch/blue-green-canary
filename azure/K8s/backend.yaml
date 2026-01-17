@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: blue
+  namespace: dev
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -14,12 +14,30 @@ spec:
         app: backend
         azure.workload.identity/use: "true"
     spec:
-      serviceAccountName: backend-sa
+      serviceAccountName: dev-sa
       containers:
         - name: backend
-          image: k8spractice.azurecr.io/blue_backend:latest
+          image: k8spractice.azurecr.io/backend:latest
           ports:
             - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: "postgres"   # <‑‑ FIXED
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
           volumeMounts:
             - name: secrets-store
               mountPath: /mnt/secrets
@@ -31,19 +49,3 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: postgres-keyvault
-                       
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend  # ✅ Frontend will connect to this
-  namespace: blue
-spec:
-  selector:
-    app: backend  # Must match deployment label
-  ports:
-    - port: 3000
-      targetPort: 3000
-  type: ClusterIP
