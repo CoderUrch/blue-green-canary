@@ -25,7 +25,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: frontend-green
+                name: frontend-green #(or to frontend-blue for blue-green deployment)
                 port:
                   number: 80
     - host: keycloak.mylearncloud.shop
