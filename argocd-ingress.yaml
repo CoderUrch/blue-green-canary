@@ -2,12 +2,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: argocd-ingress
-  namespace: blue
+  namespace: dev
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    # Add these lines to fix the redirect loop:
     nginx.ingress.kubernetes.io/ssl-passthrough: "false"
     nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
 spec:
@@ -22,7 +21,7 @@ spec:
               service:
                 name: argocd-server
                 port:
-                  number: 443
+                  number: 443  # Changed to 443
   tls:
     - hosts:
         - argocd.mylearncloud.shop
