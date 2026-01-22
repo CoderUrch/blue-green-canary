@@ -2,3 +2,8 @@
 credentials-velero
 
 credentials-velero
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
